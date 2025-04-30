@@ -10,7 +10,7 @@
 const axios = require('axios');
 
 // Configuration
-const API_ENDPOINT = process.env.API_ENDPOINT || 'http://localhost:5000/api/production-data';
+const API_ENDPOINT = process.env.API_ENDPOINT || 'http://localhost:5211/api/production-data';
 const SEND_INTERVAL_MS = 10000; // Send data every 10 seconds
 const MACHINES = [
     { id: 1, name: 'CNC Machine Alpha' },

@@ -8,7 +8,7 @@ services:
     build: ./backend
     container_name: cogtive-api
     ports:
-      - "5000:80"
+      - "5211:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - DATABASE_PROVIDER=Sqlite # Set to "Postgres" to use PostgreSQL 
@@ -28,7 +28,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - REACT_APP_API_BASE=http://localhost:5000
+      - REACT_APP_API_BASE=http://localhost:5211
     depends_on:
       - api
     networks:

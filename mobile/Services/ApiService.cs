@@ -17,7 +17,7 @@ namespace CogtiveDevAssignment.Services
         {
             _httpClient = new HttpClient();
             // Special IP for Android emulator to access host machine
-            _baseUrl = "http://10.0.2.2:5000/api";
+            _baseUrl = "http://10.0.2.2:5211/api";
             
             // For iOS simulator, uncomment this:
             // _baseUrl = "http://localhost:5000/api";
