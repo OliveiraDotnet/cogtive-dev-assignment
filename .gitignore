@@ -1,0 +1,25 @@
+# Build artifacts
+**/bin/
+**/obj/
+# User-specific files
+*.user
+*.suo
+*.userprefs
+# Visual Studio files
+.vs/
+# Xamarin packages and databases
+**/packages/
+*.db
+*.db
+*.db*
+# Node modules
+node_modules/
+# React build
+/build/
+# Logs
+logs/
+*.log
+# macOS
+.DS_Store
+# coverage
+coverage/

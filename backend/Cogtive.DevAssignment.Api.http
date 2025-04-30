@@ -1,0 +1,6 @@
+@Cogtive.DevAssignment.Api_HostAddress = http://localhost:5211
+
+GET {{Cogtive.DevAssignment.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
