@@ -8,11 +8,6 @@ An intentional error was found in the backend data model related to the `Efficie
 
 In the backend model, the `Efficiency` property is incorrectly defined as a `string`, as shown below:
 
-```csharp
-public string Efficiency { get; set; }  // Incorrect
-
-public decimal Efficiency { get; set; }  // Correct
-
 ## How It Affects the Application
 
 UI display issues: The value might be treated as plain text rather than a number.
@@ -23,5 +18,7 @@ Validation problems: It's harder to ensure the value is between 0 and 100 if it'
 
 Data inconsistency: Input like `eighty` or `null` can be incorrectly accepted and saved.
 
+```csharp
+public string Efficiency { get; set; }  // Incorrect
 
-
+public decimal Efficiency { get; set; }  // Correct
