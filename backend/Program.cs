@@ -132,7 +132,7 @@ app.MapGet("/api/machines/{id}/production-data", async (int id, AppDbContext con
         .OrderByDescending(p => p.Timestamp)
         .ToListAsync();
 
-    return data.Count == 0 ? Results.NotFound() : Results.Ok(data);
+    return data.Count == 0 ? Results.Ok(new List<ProductionData>()) : Results.Ok(data);
 })
 .WithName("GetMachineProductionData")
 .Produces<List<ProductionData>>(StatusCodes.Status200OK)
@@ -185,21 +185,21 @@ void InitSeedData(AppDbContext context)
         new ProductionData { 
             MachineId = 1, 
             Timestamp = now.AddHours(-4), 
-            Efficiency = 92.7,
+            Efficiency = 92.7m,
             UnitsProduced = 427, 
             Downtime = 24 
         },
         new ProductionData { 
             MachineId = 2, 
             Timestamp = now.AddHours(-3), 
-            Efficiency = 88.3, 
+            Efficiency = 88.3m, 
             UnitsProduced = 195, 
             Downtime = 32 
         },
         new ProductionData { 
             MachineId = 1, 
             Timestamp = now.AddHours(-2), 
-            Efficiency = 95.1, 
+            Efficiency = 95.1m, 
             UnitsProduced = 512, 
             Downtime = 15 
         }
