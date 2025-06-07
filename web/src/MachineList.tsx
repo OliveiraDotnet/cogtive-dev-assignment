@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchMachines, fetchMachineProductionData } from './api';
 import { Machine, ProductionData } from './models';
+import FullScreenLoader from './ScreenLoader';
 
 const MachineList: React.FC = () => {
   const [machines, setMachines] = useState<Machine[]>([]);
@@ -38,9 +39,9 @@ const MachineList: React.FC = () => {
       });
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
   if (error) {
     return (
@@ -53,6 +54,7 @@ const MachineList: React.FC = () => {
 
   return (
     <div className="machines-container">
+      <FullScreenLoader show={loading} /> 
       <h2>Industrial Machines</h2>
       <table className="machines-table" border={1} cellPadding={5}>
         <thead>

@@ -9,12 +9,12 @@ export const fetchMachines = async (): Promise<Machine[]> => {
 };
 
 export const fetchMachineById = async (id: number): Promise<Machine> => {
-  const response = await axios.get<Machine>(`${API_BASE}/api/machines/${id}`);
+    const response = await axios.get<Machine>(`${API_BASE}/api/machines/${id}`);
   return response.data;
 };
 
 export const fetchProductionData = async (): Promise<ProductionData[]> => {
-  const response = await axios.get<ProductionData[]>(`${API_BASE}/api/production-data`);
+    const response = await axios.get<ProductionData[]>(`${API_BASE}/api/production-data`);
   return response.data;
 };
 
@@ -24,6 +24,6 @@ export const fetchMachineProductionData = async (machineId: number): Promise<Pro
 };
 
 export const postProductionData = async (data: Omit<ProductionData, 'id'>): Promise<ProductionData> => {
-  const response = await axios.post<ProductionData>(`${API_BASE}/api/production-data`, data);
+    const response = await axios.post<ProductionData>(`${API_BASE}/api/production-data`, data);
   return response.data;
 };
