@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles.css';
+import '../css/components/screen_loader.css';
 
 interface FullScreenLoaderProps {
   show: boolean;

@@ -1,6 +1,6 @@
 import React from 'react';
 import MachineList from './MachineList';
-import './styles.css';
+import './css/styles.css';
 
 const App: React.FC = () => (
   <div className="app-container">
