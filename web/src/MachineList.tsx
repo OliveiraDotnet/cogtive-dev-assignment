@@ -142,6 +142,7 @@ const MachineList: React.FC = () => {
                         id="statusFilter"
                         className="form-select"
                         style={{ minWidth: '150px' }}
+                        data-testid="status-select"
                         value={statusFilter}
                         onChange={(e) => {
                             setStatusFilter(e.target.value as 'all' | 'active' | 'inactive')
