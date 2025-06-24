@@ -12,16 +12,60 @@ const MachineList: React.FC = () => {
     const [error, setError] = useState<boolean>(false);
     const [toastMessage, setToastMessage] = useState<string | null>(null);
     const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'inactive'>('all');
+    const [searchTerm, setSearchTerm] = useState<string>('');
+    const [sortColumn, setSortColumn] = useState<'name' | 'type' | 'status' | null>(null);
+    const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
     useEffect(() => {
         loadMachines();
     }, []);
 
-    const filteredMachines = machines.filter(machine => {
-        if (statusFilter === 'all') return true;
-        if (statusFilter === 'active') return machine.isActive;
-        if (statusFilter === 'inactive') return !machine.isActive;
-        return true;
+    const handleSort = (column: 'name' | 'type' | 'status') => {
+        if (sortColumn === column) {
+            setSortDirection(prev => (prev === 'asc' ? 'desc' : 'asc'));
+        } else {
+            setSortColumn(column);
+            setSortDirection('asc');
+        }
+    };
+
+    const filteredMachines = machines
+    .filter(machine => {
+        const statusMatches =
+            statusFilter === 'all' ||
+            (statusFilter === 'active' && machine.isActive) ||
+            (statusFilter === 'inactive' && !machine.isActive);
+
+        const searchMatches =
+            machine.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            machine.serialNumber.toLowerCase().includes(searchTerm.toLowerCase());
+
+        return statusMatches && searchMatches;
+    })
+    .sort((a, b) => {
+        if (!sortColumn) return 0;
+
+        let aValue: string = '';
+        let bValue: string = '';
+
+        switch (sortColumn) {
+            case 'name':
+                aValue = a.name.toLowerCase();
+                bValue = b.name.toLowerCase();
+                break;
+            case 'type':
+                aValue = a.type.toLowerCase();
+                bValue = b.type.toLowerCase();
+                break;
+            case 'status':
+                aValue = a.isActive ? 'active' : 'inactive';
+                bValue = b.isActive ? 'active' : 'inactive';
+                break;
+        }
+
+        if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
+        if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+        return 0;
     });
 
     const showToast = (message: string) => {
@@ -82,7 +126,18 @@ const MachineList: React.FC = () => {
 
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <h2 className="mb-0">Industrial Machines</h2>
-                <div className="form-inline">
+                <div className="d-flex gap-2">
+                    <input
+                        type="text"
+                        className="form-control ms-2"
+                        placeholder="Search by name or serial"
+                        value={searchTerm}
+                        onChange={(e) => {
+                            setSearchTerm(e.target.value);
+                            setSelectedMachine(null);
+                        }}
+                        style={{ minWidth: '220px' }}
+                    />
                     <select
                         id="statusFilter"
                         className="form-select"
@@ -105,10 +160,41 @@ const MachineList: React.FC = () => {
                         <thead className="table-light align-middle">
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
+                                <th style={{ cursor: 'pointer' }} onClick={() => handleSort('name')}>
+                                    Name
+                                    <i
+                                        className={`bi bi-caret-up${sortColumn === 'name' && sortDirection === 'asc' ? '-fill' : ''} ms-1`}
+                                        style={{ color: sortColumn === 'name' && sortDirection === 'asc' ? '#000' : '#ccc' }}
+                                    ></i>
+                                    <i
+                                        className={`bi bi-caret-down${sortColumn === 'name' && sortDirection === 'desc' ? '-fill' : ''} ms-1`}
+                                        style={{ color: sortColumn === 'name' && sortDirection === 'desc' ? '#000' : '#ccc' }}
+                                    ></i>
+                                </th>
                                 <th>Serial Number</th>
-                                <th>Type</th>
-                                <th>Status</th>
+                                <th style={{ cursor: 'pointer' }} onClick={() => handleSort('type')}>
+                                    Type
+                                    <i
+                                        className={`bi bi-caret-up${sortColumn === 'type' && sortDirection === 'asc' ? '-fill' : ''} ms-1`}
+                                        style={{ color: sortColumn === 'type' && sortDirection === 'asc' ? '#000' : '#ccc' }}
+                                    ></i>
+                                    <i
+                                        className={`bi bi-caret-down${sortColumn === 'type' && sortDirection === 'desc' ? '-fill' : ''} ms-1`}
+                                        style={{ color: sortColumn === 'type' && sortDirection === 'desc' ? '#000' : '#ccc' }}
+                                    ></i>
+                                </th>
+
+                                <th style={{ cursor: 'pointer' }} onClick={() => handleSort('status')}>
+                                    Status
+                                    <i
+                                        className={`bi bi-caret-up${sortColumn === 'status' && sortDirection === 'asc' ? '-fill' : ''} ms-1`}
+                                        style={{ color: sortColumn === 'status' && sortDirection === 'asc' ? '#000' : '#ccc' }}
+                                    ></i>
+                                    <i
+                                        className={`bi bi-caret-down${sortColumn === 'status' && sortDirection === 'desc' ? '-fill' : ''} ms-1`}
+                                        style={{ color: sortColumn === 'status' && sortDirection === 'desc' ? '#000' : '#ccc' }}
+                                    ></i>
+                                </th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
